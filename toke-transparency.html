@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toke Transparency — Know Before You Go</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --ink: #1A1A18;
+    --ink-muted: #6B6B62;
+    --green: #2D6A4F;
+    --green-light: #52B788;
+    --green-pale: #D8F3DC;
+    --amber: #E9C46A;
+    --border: #E2DDD6;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--green);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+  }
+
+  .logo-text span { color: var(--green); }
+
+  .nav-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-muted);
+  }
+  .btn-ghost:hover { color: var(--ink); background: var(--bg); }
+
+  .btn-primary {
+    background: var(--green);
+    color: white;
+  }
+  .btn-primary:hover { background: #235A41; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--green);
+    border: 1.5px solid var(--green);
+  }
+  .btn-outline:hover { background: var(--green-pale); }
+
+  /* HERO */
+  .hero {
+    padding: 72px 24px 56px;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-pale);
+    color: var(--green);
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 58px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  /* SEARCH BAR */
+  .search-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .search-box {
+    display: flex;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  .search-box:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(45,106,79,0.08);
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 16px 20px;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .search-input::placeholder { color: #B0ADA6; }
+
+  .search-divider {
+    width: 1px;
+    background: var(--border);
+    margin: 12px 0;
+  }
+
+  .search-city {
+    width: 160px;
+    padding: 16px 20px;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .search-city::placeholder { color: #B0ADA6; }
+
+  .search-btn {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 0 24px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .search-btn:hover { background: #235A41; }
+
+  .search-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .search-tag {
+    padding: 5px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .search-tag:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--ink);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  .stat {
+    text-align: center;
+    color: white;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--green-light);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .main { grid-template-columns: 1fr; }
+    .sidebar { order: -1; }
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  /* EMPLOYER CARDS */
+  .employer-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .employer-card:hover {
+    border-color: var(--green);
+    box-shadow: 0 4px 20px rgba(45,106,79,0.08);
+    transform: translateY(-1px);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .employer-info { flex: 1; }
+
+  .employer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .employer-meta {
+    font-size: 13px;
+    color: var(--ink-muted);
+    display: flex;
+    gap: 12px;
+  }
+
+  .policy-badge {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .policy-pass { background: var(--green-pale); color: var(--green); }
+  .policy-fail { background: #FDECEA; color: #C0392B; }
+  .policy-unclear { background: #FFF8E1; color: #B7791F; }
+
+  .card-details {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .card-source {
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .confidence {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  .conf-dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .conf-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .conf-dot.filled { background: var(--green-light); }
+
+  /* SIDEBAR */
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .submit-cta {
+    background: var(--green);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    color: white;
+  }
+
+  .submit-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .submit-cta p {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .btn-white {
+    background: white;
+    color: var(--green);
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    transition: all 0.15s;
+    width: 100%;
+  }
+  .btn-white:hover { background: var(--green-pale); }
+
+  /* INDUSTRY FILTER */
+  .filter-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .chip {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--ink-muted);
+  }
+
+  .chip.active, .chip:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-pale);
+  }
+
+  /* TREND LIST */
+  .trend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .trend-item:last-child { border-bottom: none; }
+
+  .trend-rank {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green-light);
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  .trend-name { flex: 1; margin-left: 8px; }
+
+  .trend-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,26,24,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 540px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    transform: translateY(16px);
+    transition: transform 0.2s;
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-muted);
+  }
+  .modal-close:hover { background: var(--border); }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--green);
+    background: white;
+  }
+
+  .form-textarea { resize: vertical; min-height: 90px; }
+
+  .policy-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .policy-option {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .policy-option .po-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+
+  .policy-option.selected-green { border-color: var(--green); background: var(--green-pale); color: var(--green); }
+  .policy-option.selected-red { border-color: #C0392B; background: #FDECEA; color: #C0392B; }
+  .policy-option.selected-amber { border-color: #B7791F; background: #FFF8E1; color: #B7791F; }
+  .policy-option:hover { border-color: var(--green-light); }
+
+  .anon-note {
+    background: var(--green-pale);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--green);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 13px;
+    margin-top: 48px;
+  }
+
+  footer a { color: var(--green-light); text-decoration: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESULTS STATE */
+  .results-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+
+  .results-count { font-weight: 600; color: var(--ink); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--ink-muted);
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--ink); margin-bottom: 8px; }
+  .empty-state p { font-size: 14px; max-width: 300px; margin: 0 auto 20px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-icon">🌿</div>
+    <span class="logo-text">Toke <span>Transparency</span></span>
+  </a>
+  <div class="nav-actions">
+    <button class="btn btn-ghost" onclick="openModal()">Share Your Experience</button>
+    <button class="btn btn-primary" onclick="openModal()">+ Submit Employer</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="background: var(--surface); border-bottom: 1px solid var(--border);">
+  <div class="hero">
+    <div class="hero-badge">🌿 Cannabis Workplace Transparency</div>
+    <h1>Know what to expect <em>before</em> you accept.</h1>
+    <p>Real experiences from real workers. Search any employer to see their drug testing policy, THC tolerance, and what others have been through.</p>
+  </div>
+
+  <div class="search-wrap" style="padding: 0 24px 48px;">
+    <div class="search-box">
+      <input class="search-input" id="searchEmployer" type="text" placeholder="Employer name (e.g. Rush University, Amazon...)" onkeydown="handleSearchKey(event)">
+      <div class="search-divider"></div>
+      <input class="search-city" id="searchCity" type="text" placeholder="City or state" onkeydown="handleSearchKey(event)">
+      <button class="search-btn" onclick="doSearch()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </button>
+    </div>
+    <div class="search-tags" id="searchTags">
+      <span class="search-tag" onclick="quickSearch('Rush University Medical')">Rush University</span>
+      <span class="search-tag" onclick="quickSearch('Amazon')">Amazon</span>
+      <span class="search-tag" onclick="quickSearch('United Airlines')">United Airlines</span>
+      <span class="search-tag" onclick="quickSearch('Chicago Public Schools')">CPS</span>
+      <span class="search-tag" onclick="quickSearch('Walmart')">Walmart</span>
+      <span class="search-tag" onclick="quickSearch('Google')">Google</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-num" id="statEmployers">2,847</span>
+    <span class="stat-label">Employers Reviewed</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num" id="statReports">11,204</span>
+    <span class="stat-label">Reports Submitted</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">43</span>
+    <span class="stat-label">States Covered</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Anonymous</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="content">
+
+    <!-- Filter chips -->
+    <div class="filter-chips" id="filterChips">
+      <div class="chip active" onclick="filterChip(this, 'all')">All Industries</div>
+      <div class="chip" onclick="filterChip(this, 'healthcare')">Healthcare</div>
+      <div class="chip" onclick="filterChip(this, 'tech')">Tech</div>
+      <div class="chip" onclick="filterChip(this, 'finance')">Finance</div>
+      <div class="chip" onclick="filterChip(this, 'retail')">Retail</div>
+      <div class="chip" onclick="filterChip(this, 'education')">Education</div>
+      <div class="chip" onclick="filterChip(this, 'logistics')">Logistics</div>
+      <div class="chip" onclick="filterChip(this, 'government')">Government</div>
+    </div>
+
+    <div class="section-header">
+      <h2 class="section-title" id="resultsTitle">Recently Reviewed Employers</h2>
+      <span style="font-size:13px; color: var(--ink-muted);" id="sortLabel">Sorted by: Most Recent</span>
+    </div>
+
+    <div id="resultsInfo" style="display:none;" class="results-header">
+      <span>Showing results for: <span class="results-count" id="resultsQuery"></span></span>
+      <span id="resultsCountLabel"></span>
+    </div>
+
+    <!-- Cards -->
+    <div id="employerList">
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="submit-cta">
+      <h3>Share Your Experience</h3>
+      <p>Took a drug test? Didn't have to? Help the community by reporting what happened.</p>
+      <button class="btn-white" onclick="openModal()">Submit Anonymously →</button>
+    </div>
+
+    <div class="sidebar-card" style="margin-top:16px;">
+      <div class="sidebar-title">🔥 Most Searched This Week</div>
+      <div id="trendingList"></div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-title">📊 By the Numbers</div>
+      <div style="font-size:13px; color: var(--ink-muted); line-height:1.8;">
+        <div style="display:flex; justify-content:space-between; padding: 6px 0; border-bottom:1px solid var(--border);">
+          <span>Test-free employers</span>
+          <strong style="color:var(--green);">61%</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 6px 0; border-bottom:1px solid var(--border);">
+          <span>Healthcare tests THC</span>
+          <strong style="color:#C0392B;">84%</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 6px 0; border-bottom:1px solid var(--border);">
+          <span>Tech companies test</span>
+          <strong style="color:var(--green);">12%</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding: 6px 0;">
+          <span>Avg reports per employer</span>
+          <strong>3.9</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card" style="background: var(--bg);">
+      <div style="font-size:13px; color: var(--ink-muted); text-align:center; line-height:1.6;">
+        <div style="font-size:20px; margin-bottom:8px;">🔒</div>
+        <strong style="color:var(--ink); display:block; margin-bottom:4px;">100% Anonymous</strong>
+        We never ask for your name, email, or any identifying info. Your experience is shared, never your identity.
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom: 8px;">
+    <a href="#">About</a> &nbsp;·&nbsp;
+    <a href="#">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="#">How It Works</a> &nbsp;·&nbsp;
+    <a href="#">Contact</a>
+  </div>
+  <div>© 2025 Toke Transparency. Community-sourced information. Not legal or employment advice.</div>
+</footer>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submitModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">Submit an Employer</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="anon-note">
+      🔒 <span>Completely anonymous. No account required. No personal data collected.</span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Employer Name *</label>
+      <input class="form-input" id="f_employer" type="text" placeholder="e.g. Rush University Medical Center">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Industry</label>
+      <select class="form-select" id="f_industry">
+        <option value="">Select industry...</option>
+        <option>Healthcare</option>
+        <option>Technology</option>
+        <option>Finance / Banking</option>
+        <option>Retail</option>
+        <option>Education</option>
+        <option>Logistics / Shipping</option>
+        <option>Government / Public Sector</option>
+        <option>Hospitality</option>
+        <option>Manufacturing</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">City / State</label>
+      <input class="form-input" id="f_location" type="text" placeholder="e.g. Chicago, IL">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Drug Test Policy *</label>
+      <div class="policy-options">
+        <div class="policy-option" id="po_notested" onclick="selectPolicy('notested')">
+          <span class="po-icon">✅</span>No Test
+        </div>
+        <div class="policy-option" id="po_tested" onclick="selectPolicy('tested')">
+          <span class="po-icon">🔴</span>Tests THC
+        </div>
+        <div class="policy-option" id="po_unclear" onclick="selectPolicy('unclear')">
+          <span class="po-icon">⚠️</span>Unclear
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Your Experience</label>
+      <textarea class="form-textarea" id="f_experience" placeholder="What happened? Pre-hire test? Random testing? Did a positive result affect your offer? Any details help the community..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Role Type (optional)</label>
+      <input class="form-input" id="f_role" type="text" placeholder="e.g. Nurse, Software Engineer, Warehouse Associate">
+    </div>
+
+    <button class="btn btn-primary" style="width:100%; padding:14px; justify-content:center; font-size:15px;" onclick="submitForm()">
+      Submit Anonymously 🌿
+    </button>
+  </div>
+</div>
+
+<script>
+// ---- DATA ----
+const sampleData = [
+  {
+    id: 1,
+    name: "Rush University Medical Center",
+    industry: "Healthcare",
+    location: "Chicago, IL",
+    policy: "tested",
+    policyLabel: "Tests for THC",
+    summary: "Pre-employment urine screen covers THC. Multiple reports of rescinded offers after positive tests, even with a valid medical card. Panel test, results in 3–5 days.",
+    reports: 47,
+    confidence: 5,
+    lastReport: "2 days ago",
+    tags: ["healthcare", "pre-hire", "urine test"]
+  },
+  {
+    id: 2,
+    name: "Google (Chicago office)",
+    industry: "Tech",
+    location: "Chicago, IL",
+    policy: "notested",
+    policyLabel: "No THC Test",
+    summary: "No drug screening reported at any stage of the hiring process. Multiple employees across engineering and product roles confirm no test required — including for contractors through staffing agencies.",
+    reports: 83,
+    confidence: 5,
+    lastReport: "1 day ago",
+    tags: ["tech", "no-test"]
+  },
+  {
+    id: 3,
+    name: "United Airlines",
+    industry: "Logistics",
+    location: "Chicago, IL",
+    policy: "tested",
+    policyLabel: "Tests for THC",
+    summary: "DOT-regulated employer. Pre-employment and random testing required for safety-sensitive roles (pilots, mechanics, ramp). Office roles reportedly may vary but most confirm testing.",
+    reports: 31,
+    confidence: 4,
+    lastReport: "5 days ago",
+    tags: ["logistics", "dot-regulated", "random-testing"]
+  },
+  {
+    id: 4,
+    name: "Salesforce",
+    industry: "Tech",
+    location: "Chicago, IL",
+    policy: "notested",
+    policyLabel: "No THC Test",
+    summary: "No drug test at any stage. Recent hires across sales, engineering, and design all confirm no screening. Background check only.",
+    reports: 29,
+    confidence: 4,
+    lastReport: "1 week ago",
+    tags: ["tech", "no-test"]
+  },
+  {
+    id: 5,
+    name: "JPMorgan Chase",
+    industry: "Finance",
+    location: "Chicago, IL",
+    policy: "unclear",
+    policyLabel: "Unclear / Mixed",
+    summary: "Mixed reports. Some employees report no test for analyst/associate roles. Others in compliance and trading describe pre-employment urine screens. May depend on role and office.",
+    reports: 14,
+    confidence: 3,
+    lastReport: "3 weeks ago",
+    tags: ["finance", "unclear"]
+  },
+  {
+    id: 6,
+    name: "Chicago Public Schools",
+    industry: "Education",
+    location: "Chicago, IL",
+    policy: "tested",
+    policyLabel: "Tests for THC",
+    summary: "Pre-employment screening includes THC. Required for teachers, paraprofessionals, and administrative staff. Random testing also reported. Medical marijuana card does not exempt.",
+    reports: 22,
+    confidence: 5,
+    lastReport: "4 days ago",
+    tags: ["education", "pre-hire"]
+  },
+  {
+    id: 7,
+    name: "Amazon Fulfillment Center (Joliet)",
+    industry: "Logistics",
+    location: "Joliet, IL",
+    policy: "notested",
+    policyLabel: "No THC Test",
+    summary: "Amazon updated their policy in 2021 and no longer tests for cannabis at most fulfillment centers. Multiple recent hires confirm no THC screening.",
+    reports: 61,
+    confidence: 5,
+    lastReport: "3 days ago",
+    tags: ["logistics", "retail", "no-test"]
+  },
+  {
+    id: 8,
+    name: "Northwestern Memorial Hospital",
+    industry: "Healthcare",
+    location: "Chicago, IL",
+    policy: "tested",
+    policyLabel: "Tests for THC",
+    summary: "10-panel pre-employment drug screen includes THC. Occupational health screening. Positive results result in rescinded offers. No medical exceptions reported.",
+    reports: 38,
+    confidence: 5,
+    lastReport: "6 days ago",
+    tags: ["healthcare", "pre-hire", "urine test"]
+  }
+];
+
+const trendingSearches = [
+  { name: "Rush University Medical", badge: "Tests THC", badgeClass: "policy-fail" },
+  { name: "Amazon Warehouse", badge: "No Test ✓", badgeClass: "policy-pass" },
+  { name: "United Airlines", badge: "Tests THC", badgeClass: "policy-fail" },
+  { name: "Google Chicago", badge: "No Test ✓", badgeClass: "policy-pass" },
+  { name: "JPMorgan Chase", badge: "Unclear", badgeClass: "policy-unclear" },
+];
+
+// ---- RENDER ----
+function renderCard(emp, delay = 0) {
+  const policyMap = {
+    tested: { cls: 'policy-fail', label: emp.policyLabel },
+    notested: { cls: 'policy-pass', label: emp.policyLabel },
+    unclear: { cls: 'policy-unclear', label: emp.policyLabel }
+  };
+  const p = policyMap[emp.policy];
+  const dots = Array(5).fill(0).map((_, i) =>
+    `<div class="conf-dot ${i < emp.confidence ? 'filled' : ''}"></div>`
+  ).join('');
+
+  return `
+    <div class="employer-card" style="animation-delay:${delay}ms" onclick="viewEmployer(${emp.id})">
+      <div class="card-top">
+        <div class="employer-info">
+          <div class="employer-name">${emp.name}</div>
+          <div class="employer-meta">
+            <span>📍 ${emp.location}</span>
+            <span>🏢 ${emp.industry}</span>
+          </div>
+        </div>
+        <div class="policy-badge ${p.cls}">${p.label}</div>
+      </div>
+      <div class="card-details">${emp.summary}</div>
+      <div class="card-footer">
+        <div class="card-source">👥 ${emp.reports} reports · Last: ${emp.lastReport}</div>
+        <div class="confidence">
+          Confidence: <div class="conf-dots">${dots}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTrending() {
+  document.getElementById('trendingList').innerHTML = trendingSearches.map((t, i) => `
+    <div class="trend-item">
+      <span class="trend-rank">${i+1}</span>
+      <span class="trend-name">${t.name}</span>
+      <span class="trend-badge ${t.badgeClass}" style="font-size:11px; padding:3px 8px; border-radius:100px;">${t.badge}</span>
+    </div>
+  `).join('');
+}
+
+function renderEmployers(list, query = null) {
+  const container = document.getElementById('employerList');
+  const title = document.getElementById('resultsTitle');
+  const info = document.getElementById('resultsInfo');
+  const queryEl = document.getElementById('resultsQuery');
+  const countEl = document.getElementById('resultsCountLabel');
+
+  if (query) {
+    info.style.display = 'flex';
+    queryEl.textContent = `"${query}"`;
+    countEl.textContent = `${list.length} result${list.length !== 1 ? 's' : ''} found`;
+    title.textContent = 'Search Results';
+  } else {
+    info.style.display = 'none';
+    title.textContent = 'Recently Reviewed Employers';
+  }
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No results found</h3>
+        <p>We don't have data on this employer yet. Be the first to share your experience!</p>
+        <button class="btn btn-primary" onclick="openModal()">Submit This Employer</button>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = list.map((emp, i) => renderCard(emp, i * 60)).join('');
+}
+
+// ---- SEARCH ----
+let activeFilter = 'all';
+
+function doSearch() {
+  const q = document.getElementById('searchEmployer').value.trim().toLowerCase();
+  const city = document.getElementById('searchCity').value.trim().toLowerCase();
+
+  let results = sampleData;
+  if (q) results = results.filter(e => e.name.toLowerCase().includes(q) || e.industry.toLowerCase().includes(q));
+  if (city) results = results.filter(e => e.location.toLowerCase().includes(city));
+
+  renderEmployers(results, q || city || 'all employers');
+}
+
+function quickSearch(name) {
+  document.getElementById('searchEmployer').value = name;
+  doSearch();
+  window.scrollTo({ top: 400, behavior: 'smooth' });
+}
+
+function handleSearchKey(e) {
+  if (e.key === 'Enter') doSearch();
+}
+
+function filterChip(el, industry) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeFilter = industry;
+
+  let results = sampleData;
+  if (industry !== 'all') {
+    results = results.filter(e => e.tags.includes(industry) || e.industry.toLowerCase().includes(industry));
+  }
+  renderEmployers(results, industry !== 'all' ? industry : null);
+}
+
+function viewEmployer(id) {
+  const emp = sampleData.find(e => e.id === id);
+  if (!emp) return;
+  document.getElementById('f_employer').value = emp.name;
+  document.getElementById('f_location').value = emp.location;
+  openModal();
+}
+
+// ---- MODAL ----
+let selectedPolicy = null;
+
+function openModal() {
+  document.getElementById('submitModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('submitModal')) closeModal();
+}
+
+function selectPolicy(val) {
+  selectedPolicy = val;
+  document.querySelectorAll('.policy-option').forEach(el => {
+    el.classList.remove('selected-green','selected-red','selected-amber');
+  });
+  const classMap = { notested: 'selected-green', tested: 'selected-red', unclear: 'selected-amber' };
+  document.getElementById('po_' + val).classList.add(classMap[val]);
+}
+
+function submitForm() {
+  const employer = document.getElementById('f_employer').value.trim();
+  if (!employer) { alert('Please enter an employer name.'); return; }
+  if (!selectedPolicy) { alert('Please select a drug test policy.'); return; }
+
+  // Add to local data
+  const newEntry = {
+    id: sampleData.length + 1,
+    name: employer,
+    industry: document.getElementById('f_industry').value || 'Other',
+    location: document.getElementById('f_location').value || 'Unknown',
+    policy: selectedPolicy,
+    policyLabel: { notested: 'No THC Test', tested: 'Tests for THC', unclear: 'Unclear / Mixed' }[selectedPolicy],
+    summary: document.getElementById('f_experience').value || 'Community-submitted report. No additional details provided.',
+    reports: 1,
+    confidence: 1,
+    lastReport: 'Just now',
+    tags: ['community-submitted']
+  };
+  sampleData.unshift(newEntry);
+
+  // Update stats
+  const empEl = document.getElementById('statEmployers');
+  const repEl = document.getElementById('statReports');
+  empEl.textContent = (parseInt(empEl.textContent.replace(',','')) + 1).toLocaleString();
+  repEl.textContent = (parseInt(repEl.textContent.replace(',','')) + 1).toLocaleString();
+
+  closeModal();
+  renderEmployers(sampleData);
+
+  // Reset
+  ['f_employer','f_industry','f_location','f_experience','f_role'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  selectedPolicy = null;
+  document.querySelectorAll('.policy-option').forEach(el => el.className = 'policy-option');
+
+  // Scroll to top of results
+  setTimeout(() => {
+    document.querySelector('.content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 200);
+}
+
+// ---- INIT ----
+renderEmployers(sampleData);
+renderTrending();
+</script>
+</body>
+</html>
